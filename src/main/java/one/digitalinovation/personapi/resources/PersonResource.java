@@ -1,24 +1,33 @@
 package one.digitalinovation.personapi.resources;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import one.digitalinovation.personapi.entities.Person;
+import one.digitalinovation.personapi.services.PersonService;
 
 @RestController
 @RequestMapping(value = "/api/v1/people")
 public class PersonResource {
 
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
+	@Autowired
+	private PersonService personService;
+	
 	@GetMapping
-	public ResponseEntity<Person> findAll() throws ParseException {
-		Person p1 = new Person(1L, "Oliver", "Queen", "679094321", sdf.parse("05/02/1980"));
-		return ResponseEntity.ok().body(p1);
+	public ResponseEntity<List<Person>> findAll() {
+		List<Person> list = personService.findAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Person> findById(@PathVariable Long id) {
+		Person person = personService.findById(id);
+		return ResponseEntity.ok().body(person);
 	}
 }

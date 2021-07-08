@@ -22,8 +22,8 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		Person p1 = new Person(1L, "Oliver", "Queen", "679094321", sdf.parse("05/02/1980"));
-		Person p2 = new Person(2L, "Barry", "Allen", "548094321", sdf.parse("01/02/1975"));
+		Person p1 = new Person(null, "Oliver", "Queen", "679094321", sdf.parse("05/02/1980"));
+		Person p2 = new Person(null, "Barry", "Allen", "548094321", sdf.parse("01/02/1975"));
 		
 		personRepository.saveAll(Arrays.asList(p1, p2));
 	}
