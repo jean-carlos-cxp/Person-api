@@ -27,4 +27,8 @@ public class PersonService {
 	public Person create(Person person) {
 		return personRepository.save(person);
 	}
+	
+	public void delete(Long id) {
+		personRepository.deleteById(id);
+	}
 }
