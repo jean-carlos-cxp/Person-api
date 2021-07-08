@@ -1,14 +1,19 @@
 package one.digitalinovation.personapi.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Person implements Serializable {
@@ -30,6 +35,9 @@ public class Person implements Serializable {
     
 	private Date birthDate;
 	
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	private List<Phone> phones; 
+	
 	public Person() {
 		
 	}
@@ -40,6 +48,7 @@ public class Person implements Serializable {
 		this.lastName = lastName;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
+		phones = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -80,6 +89,10 @@ public class Person implements Serializable {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+	
+	public List<Phone> getPhones() {
+		return phones;
 	}
 
 	@Override
