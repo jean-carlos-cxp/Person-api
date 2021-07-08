@@ -23,4 +23,8 @@ public class PersonService {
 		Optional<Person> person = personRepository.findById(id);
 		return person.get();
 	}
+	
+	public Person create(Person person) {
+		return personRepository.save(person);
+	}
 }
