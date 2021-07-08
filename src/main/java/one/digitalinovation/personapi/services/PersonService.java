@@ -3,6 +3,8 @@ package one.digitalinovation.personapi.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -45,9 +47,14 @@ public class PersonService {
 	}
 
 	public Person update(Long id, Person obj) {
-		Person person = personRepository.getOne(id);
-		updateData(person, obj);
-		return personRepository.save(person);
+		try {
+			Person person = personRepository.getOne(id);
+			updateData(person, obj);
+			return personRepository.save(person);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(Person person, Person obj) {
